@@ -1,5 +1,5 @@
 //REST APIs for managing CloudKitchen Database in MongoDB Atlas
-// Import dependencies modules
+//Import dependencies modules
 const express = require('express');
 const cors = require("cors");
 const path = require('path');
@@ -12,10 +12,10 @@ app.use(express.json());
 app.use(cors()); // allow all origins
 
 // Absolute path to client folder
-//const clientPath = path.join(__dirname, '../CST3990-Neeti-Vue');
+const clientPath = path.join(__dirname, '../CST3990-Neeti-Vue');
 
 // Serve it as static path within the web service
-//app.use(express.static(clientPath));
+app.use(express.static(clientPath));
 
 // <-- expose the assets folder to the client so that images are accessible by client
 app.use(express.static('assets')); 
@@ -101,5 +101,5 @@ const port = process.env.PORT || 3000;
 // Initialize server
 app.listen(port, () => {
     console.log('Express.js server is running on localhost:3000');
-    //console.log('Client Path = ', clientPath);
+    console.log('Client Path = ', clientPath);
 });
