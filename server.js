@@ -2,6 +2,7 @@
 //Import dependencies modules
 const express = require('express');
 const cors = require("cors");
+const multer = require("multer");
 const path = require('path');
 
 // Create an Express.js instance
@@ -13,6 +14,27 @@ app.use(cors()); // allow all origins
 
 // Absolute path to client folder
 const clientPath = path.join(__dirname, '../CST3990-Neeti-Vue');
+
+// configure storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "assets/images"); // your static folder
+  },
+  filename: (req, file, cb) => {
+    const uniqueName = Date.now() + path.extname(file.originalname);
+    cb(null, uniqueName);
+  }
+});
+
+const upload = multer({ storage });
+
+// upload route
+app.post("/upload", upload.single("image"), (req, res) => {
+  res.json({
+    message: "File uploaded successfully",
+    filePath: `/images/${req.file.filename}`
+  });
+});
 
 // Serve it as static path within the web service
 app.use(express.static(clientPath));
